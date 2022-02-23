@@ -1,53 +1,47 @@
-const modals = (modal) => {
-	const modalTrigger = document.querySelector(modal)
-	const trigger = document.querySelectorAll('.contact_us_wrap')
-	const modalBlock = document.querySelector('.popup_engineer')
-	const modalPopup = document.querySelector('.popup')
-	const closePopup = document.querySelector('.popup .popup_close')
-	const close = document.querySelector('.popup_engineer .popup_close')
+const modals = () => {
+	function bindModal(modalTrigger, modalBlock, closeSelector) {
+		const trigger = document.querySelectorAll(modalTrigger)
+		const modal = document.querySelector(modalBlock)
+		const close = document.querySelector(closeSelector)
+		trigger.forEach((item) => {
+			item.addEventListener('click', (e) => {
+				if (e.target) {
+					e.preventDefault()
+				}
 
-	trigger.forEach((item) => {
-		item.addEventListener('click', (e) => {
-			if (e.target) {
-				e.preventDefault()
-			}
-
-			modalPopup.style.display = 'block'
-			document.body.style.overflow = 'hidden'
+				modal.style.display = 'block'
+				document.body.style.overflow = 'hidden'
+			})
 		})
-	})
 
-	modalTrigger.addEventListener('click', (e) => {
-		if (e.target.getAttribute('data-btn') === modalTrigger.dataset.btn) {
-			modalBlock.style.display = 'block'
-			document.body.style.overflow = 'hidden'
-		}
-	})
-
-	close.addEventListener('click', () => {
-		modalBlock.style.display = 'none'
-		document.body.style.overflow = ''
-	})
-
-	closePopup.addEventListener('click', () => {
-		modalPopup.style.display = 'none'
-		document.body.style.overflow = ''
-	})
-
-	modalBlock.addEventListener('click', (e) => {
-		if (e.target === modalBlock || e.target === modalPopup) {
-			modalBlock.style.display = 'none'
-			modalPopup.style.display = 'none'
+		close.addEventListener('click', () => {
+			modal.style.display = 'none'
 			document.body.style.overflow = ''
-		}
-	})
+		})
 
-	modalPopup.addEventListener('click', (e) => {
-		if (e.target === modalPopup) {
-			modalPopup.style.display = 'none'
-			document.body.style.overflow = ''
+		modal.addEventListener('click', (e) => {
+			if (e.target === modal) {
+				modal.style.display = 'none'
+				document.body.style.overflow = ''
+			}
+		})
+
+		function showModalByTime(selector, time) {
+			setTimeout(function () {
+				document.querySelector(selector).style.display = 'block'
+				document.body.style.overflow = 'hidden'
+			}, time)
 		}
-	})
+
+		showModalByTime('.popup', 60000)
+	}
+
+	bindModal(
+		'.popup_engineer_btn',
+		'.popup_engineer',
+		'.popup_engineer .popup_close',
+	)
+	bindModal('.phone_link', '.popup', '.popup .popup_close')
 }
 
 export default modals
