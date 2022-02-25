@@ -9,6 +9,8 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
 
 			tab.forEach((item) => {
 				item.classList.remove(activeClass)
+				item.classList.add('animated')
+				item.classList.remove('pulse')
 			})
 		})
 	}
@@ -16,6 +18,7 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
 	function showTabContent(i = 0) {
 		content[i].style.display = 'block'
 		tab[i].classList.add(activeClass)
+		tab[i].classList.add('pulse')
 	}
 
 	hideContent()
