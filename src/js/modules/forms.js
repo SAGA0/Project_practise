@@ -1,18 +1,25 @@
-const forms = () => {
-	const form = document.querySelectorAll('form'),
-		inputs = document.querySelectorAll('input'),
-		phoneInputs = document.querySelectorAll('input[name="user_phone"]')
+import checkNumInputs from './checkNumInputs'
 
-	phoneInputs.forEach((item) => {
-		item.addEventListener('input', () => {
-			item.value = item.value.replace(/\D/, '')
-		})
-	})
+const forms = (state) => {
+	const form = document.querySelectorAll('form'),
+		inputs = document.querySelectorAll('input')
+
+	const windows = document.querySelectorAll('[data-modal]')
+
+	checkNumInputs('input[name="user_phone"]')
 
 	const message = {
 		loading: 'Загрузка...',
 		success: 'Скоро мы с вами свяжемся!',
 		failure: 'Что пошло не так...',
+		empty: 'Заполните все поля',
+	}
+
+	const closeModals = () => {
+		windows.forEach((item) => {
+			item.style.display = 'none'
+			console.log(2)
+		})
 	}
 
 	const clearInputs = () => {
@@ -41,7 +48,11 @@ const forms = () => {
 			item.appendChild(statusMessage)
 
 			const formData = new FormData(item)
-
+			if (item.getAttribute('data-calc') === 'end') {
+				for (let key in state) {
+					formData.append(key, state[key])
+				}
+			}
 			postData('assets/server.php', formData)
 				.then((res) => {
 					console.log(res)
@@ -51,10 +62,13 @@ const forms = () => {
 					statusMessage.textContent = message.failure
 				})
 				.finally(() => {
+					for (let key in state) {
+						delete state[key]
+					}
 					clearInputs(),
 						setTimeout(() => {
-							statusMessage.remove()
-						}, 5000)
+							closeModals(), statusMessage.remove()
+						}, 2000)
 				})
 		})
 	})
