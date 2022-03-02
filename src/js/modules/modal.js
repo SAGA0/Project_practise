@@ -16,6 +16,33 @@ const modals = (state) => {
 					e.preventDefault()
 				}
 
+				let message = document.createElement('div')
+				message.innerHTML = 'Заполните все поля'
+
+				if (modal.classList.contains('popup_calc_profile')) {
+					if (!state.form || !state.width || !state.height) {
+						document
+							.querySelector('.popup_calc_button')
+							.insertAdjacentElement('afterend', message)
+						setTimeout(() => {
+							message.remove()
+						}, 1000)
+						return
+					}
+				}
+
+				if (modal.classList.contains('popup_calc_end')) {
+					if (!state.type || !state.profile) {
+						document
+							.querySelector('.popup_calc_profile_button')
+							.insertAdjacentElement('afterend', message)
+						setTimeout(() => {
+							message.remove()
+						}, 1000)
+						return
+					}
+				}
+
 				windows.forEach((item) => {
 					item.style.display = 'none'
 				})
