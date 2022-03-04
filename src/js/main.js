@@ -3,6 +3,7 @@ import modals from './modules/modal'
 import tabs from './modules/tabs'
 import forms from './modules/forms'
 import changeModalState from './modules/changeModalState'
+import timer from './modules/timer'
 
 window.addEventListener('DOMContentLoaded', () => {
 	let modalState = {}
@@ -24,4 +25,5 @@ window.addEventListener('DOMContentLoaded', () => {
 		'inline-block',
 	)
 	forms(modalState)
+	timer('#timer', '2022-03-18')
 })
