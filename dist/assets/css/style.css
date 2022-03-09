@@ -41,6 +41,21 @@ textarea:focus {
     background-color: #ffffff;
 }
 
+.faded {
+    animation-name: faded;
+    animation-duration: 1.5s;
+}
+
+@keyframes faded {
+    from {
+        opacity: 0.1;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 .form h2 {
     margin-bottom: 3rem;
     font-size: 2rem;
